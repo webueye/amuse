@@ -1,0 +1,15 @@
+<ion-view view-title="Market">
+	<ion-content>
+		<ion-list>
+			<div class="row row-wrap">
+				<div class="col col-33" ng-repeat="market in marketList">
+					<div style="background: {{market.changePercent | showColor}}; text-align: center; color: white;">
+						<div style="font-size: 8px; text-align: center; font-family: 'courier new';">{{market.name}}</div>
+						<div style="font-size: 15px;;">{{market.indices}}</div>
+						<div style="font-size: 9px;">{{market.change}} [ {{market.changePercent}}% ]</div>
+					</div>
+				</div>
+			</div>
+		</ion-list>
+	</ion-content>
+</ion-view>

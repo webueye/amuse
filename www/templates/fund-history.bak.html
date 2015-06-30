@@ -1,0 +1,67 @@
+<style type="text/css">
+	.item-avatar,
+	.item-avatar .item-content,
+	.item-avatar-left,
+	.item-avatar-left .item-content {
+		padding-left: 0px;
+		min-height: 40px;
+	}
+	.item-complex.item-icon-right .item-content {
+		padding-right: 0px;
+	}
+	.item-complex .item-content,
+	.item-radio .item-content {
+		padding: 0px;
+	}
+	.row {
+		padding: 0px;
+		font-size: 13px;
+	}
+	.item {
+		padding: 0px;
+	}
+	.item-icon-right {
+		padding-right: 0px;
+	}
+</style>
+
+<ion-view view-title="{{fund.name}}">
+	<ion-nav-buttons side="left">
+		<button style="transition-duration: 0ms;" class="button back-button buttons  button-clear header-item" ng-click="$ionicGoBack()"><i class="icon ion-ios-arrow-back"></i>
+			<span style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);" class="back-text"><span class="default-title hide">Back</span></span>
+		</button>
+	</ion-nav-buttons>
+
+	<ion-content>
+		<ion-list>
+			<div class="row" style="margin-top: -1px; background: lightgray;">
+				<div class="col col-40" align="center">
+					Date
+				</div>
+				<div class="col col-20" align="center">
+					TNV
+				</div>
+				<div class="col col-20" align="center">
+					UNV
+				</div>
+				<div class="col col-20" align="center">
+					Chg%
+				</div>
+			</div>
+
+			<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="fundHistory in fund.histories" type="item-text-wrap">
+				<div class="row">
+					<div class="col col-40" align="center" style="margin-top: 5px; margin-bottom: 5px;">{{fundHistory.date}}</div>
+					<div class="col col-20" align="center" style="margin-top: 5px; margin-bottom: 5px;">{{fundHistory.totalNetValue | number: 4}}</div>
+					<div class="col col-20" align="center" style="margin-top: 5px; margin-bottom: 5px;">{{fundHistory.unitNetValue | number: 4}}</div>
+					<div class="col col-20" align="center" style="margin-top: 5px; margin-bottom: 5px; margin-right: 15px;;">
+						<span style="background: {{fundHistory.changePercent | showColor}}; color: white; padding: 5px; margin-top: 8px; width: 65px;">
+							{{fundHistory.changePercent >= 0? '+': ''}}{{fundHistory.changePercent | number:2}}%
+						</span>
+					</div>
+				</div>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+
+</ion-view>
