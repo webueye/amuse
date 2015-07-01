@@ -1,61 +1,123 @@
 <!DOCTYPE HTML>
 <html>
+
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Highstock Example</title>
 
 		<script type="text/javascript" src="../js/jquery.min.js"></script>
 		<style type="text/css">
-${demo.css}
+			$ {
+				demo.css
+			}
 		</style>
 		<script type="text/javascript">
-$(function () {
-    $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
-
-        // Create the chart
-        $('#container').highcharts('StockChart', {
-
-
-            rangeSelector : {
-                selected : 1
-            },
-
-            title : {
-                text : 'AAPL Stock Price'
-            },
-
-            series : [{
-                name : 'AAPL Stock Price',
-                data : data,
-                type : 'area',
-                threshold : null,
-                tooltip : {
-                    valueDecimals : 2
-                },
-                fillColor : {
-                    linearGradient : {
-                        x1: 0,
-                        y1: 0,
-                        x2: 0,
-                        y2: 1
-                    },
-                    stops : [
-                        [0, Highcharts.getOptions().colors[0]],
-                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                    ]
-                }
-            }]
-        });
-    });
-});
-
+			$(function() {
+				var seriesOptions = [];
+				seriesCounter = 0,
+					names = ['GOOG'],
+					// create the chart when all data is loaded
+					createChart = function() {
+						$('#container1').highcharts('StockChart', {
+							rangeSelector: {
+								selected: 4
+							},
+							yAxis: {
+								labels: {
+									formatter: function() {
+										return (this.value > 0 ? ' + ' : '') + this.value + '%';
+									}
+								},
+								plotLines: [{
+									value: 0,
+									width: 2,
+									color: 'silver'
+								}]
+							},
+							xAxis: {
+								tickPosition: [0, 2, 4, 6, 8, 10]
+							},
+							plotOptions: {
+								series: {
+									compare: 'percent',
+									pointStart: Date.UTC(2015, 1, 1, 9, 30, 0),
+									pointInterval: 1800 * 1000,
+									categories: ['Apples', 'Bananas', 'Oranges']
+								}
+							},
+							series: seriesOptions
+						});
+					};
+				$.each(names, function(i, name) {
+					seriesOptions[i] = {
+						name: name,
+						data: [49.9, 71.5, -106.4, 129.2, -144.0, 176.0, 135.6, 148.5, 216.4, 194.1, -95.6, 54.4]
+					};
+					// As we're loading the data asynchronously, we don't know what order it will arrive. So
+					// we keep a counter and create the chart when all the data is loaded.
+					seriesCounter += 1;
+					if (seriesCounter === names.length) {
+						createChart();
+					}
+				});
+			});
+			$(function() {
+				$('#container').highcharts({
+					chart: {},
+					xAxis: {},
+					rangeSelector: {
+								selected: 4
+							},
+					yAxis: {
+						labels: {
+							formatter: function() {
+								return (this.value > 0 ? ' + ' : '') + this.value + '%';
+							}
+						},
+						plotLines: [{
+							value: 0,
+							width: 2,
+							color: 'silver'
+						}]
+					},
+					plotOptions: {
+						series: {
+							showCheckbox: true,
+							compare: 'percent',
+							pointStart: Date.UTC(2015, 1, 1, 9, 30, 0),
+							pointInterval: 1800 * 1000,
+						},
+						line: {
+							events: {
+								checkboxClick: function(event) {
+									if (event.checked == true) {
+										this.show();
+									} else {
+										this.hide();
+									}
+								},
+								legendItemClick: function(event) { //return false 即可禁用LegendIteml，防止通过点击item显示隐藏系列
+									return false;
+								}
+							}
+						}
+					},
+					series: [{
+						data: [29.9, -71.5, 106.4, -129.2, 144.0, -176.0, 135.6, 148.5, -54.4],
+						visible: true //默认不显示
+					}, {
+						data: ["a", "", "", "", "", "", "", "", "", "", "", ""],
+						selected: false //默认checkbox勾选
+					}]
+				});
+			});
 		</script>
 	</head>
+
 	<body>
-<script src="../js/highstock.js"></script>
-<script src="../js/modules/exporting.js"></script>
+		<script src="../js/highstock.js"></script>
 
-
-<div id="container" style="height: 400px; min-width: 310px"></div>
+		<div id="container" style="height: 400px; min-width: 310px"></div>
 	</body>
+
 </html>
