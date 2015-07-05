@@ -71,21 +71,21 @@
 
 				<div class="row">
 					<div class="col col-40" align="left">
-						<div style="font-family: 'courier new'; font-size: 12px;">{{fund.name | limitTo: 7}}</div>
+						<div style="font-family: 'courier new'; font-size: 12px; margin-top: 5px;">{{fund.name | limitTo: 7}}</div>
 						<div style="font-family: 'courier new'; font-size: 11px;">{{fund.code}}</div>
 					</div>
 					<div class="col col-20" align="right" style="margin-right: 5px;">
-						<div style="font-size: 12px;">{{fund.netValue | number: 4}}</div>
+						<div style="font-size: 12px; margin-top: 5px;">{{fund.netValue | number: 4}}</div>
 						<div style="font-size: 10px;">{{fund.calculateDateStr}}</div>
 					</div>
 					<div class="col col-20" align="right" style="margin-right: 5px;">
-						<div style="font-size: 12px; color: {{fund.totalChangeValue | showColor}};">
+						<div style="font-size: 12px; margin-top: 5px; color: {{fund.totalChangeValue | showColor}};">
 							{{fund.totalChangeValue | number: 2}}
 						</div>
 						<div style="font-size: 10px;">{{fund.marketValue | number: 2}}</div>
 					</div>
-					<div class="col col-20" align="right" style="padding-top: 15px; margin-right: 15px;">
-						<span style="color: {{fund.changeValue | showColor}}; padding: 5px; margin-top: 8px; font-size: 12px;">
+					<div class="col col-20" align="right" style="padding-top: 15px; margin-right: 5px;">
+						<span style="color: {{fund.changeValue | showColor}}; margin-top: 8px; font-size: 12px;">
 							{{fund.changePercent >= 0? '+': ''}}{{fund.changeValue | number:2}}
 						</span>
 					</div>
