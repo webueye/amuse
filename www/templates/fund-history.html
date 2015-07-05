@@ -33,49 +33,35 @@
 	</ion-nav-buttons>
 
 	<ion-content>
-		<ion-slide-box on-slide-changed="slideHasChanged($index)">
-			<ion-slide>
-				<ion-list>
-					<div class="row" style="margin-top: -1px; background: lightgray;">
-						<div class="col col-40" align="center">
-							Date
-						</div>
-						<div class="col col-20" align="center">
-							TNV
-						</div>
-						<div class="col col-20" align="center">
-							UNV
-						</div>
-						<div class="col col-20" align="center">
-							Chg%
-						</div>
-					</div>
+		<ion-list>
+			<div class="row" style="margin-top: -1px; background: lightgray;">
+				<div class="col col-40" align="center">
+					Date
+				</div>
+				<div class="col col-20" align="center">
+					TNV
+				</div>
+				<div class="col col-20" align="center">
+					UNV
+				</div>
+				<div class="col col-20" align="center">
+					Chg%
+				</div>
+			</div>
 
-					<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="fundHistory in fund.histories" type="item-text-wrap">
-						<div class="row">
-							<div class="col col-40" align="center" style="margin-top: 5px; margin-bottom: 5px;">{{fundHistory.date}}</div>
-							<div class="col col-20" align="center" style="margin-top: 5px; margin-bottom: 5px;">{{fundHistory.totalNetValue | number: 4}}</div>
-							<div class="col col-20" align="center" style="margin-top: 5px; margin-bottom: 5px;">{{fundHistory.unitNetValue | number: 4}}</div>
-							<div class="col col-20" align="center" style="margin-top: 5px; margin-bottom: 5px; margin-right: 15px;;">
-								<span style="background: {{fundHistory.changePercent | showColor}}; color: white; padding: 5px; margin-top: 8px; width: 65px;">
+			<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="fundHistory in fund.histories" type="item-text-wrap">
+				<div class="row">
+					<div class="col col-40" align="center" style="margin-top: 5px; margin-bottom: 5px;">{{fundHistory.date}}</div>
+					<div class="col col-20" align="center" style="margin-top: 5px; margin-bottom: 5px;">{{fundHistory.totalNetValue | number: 4}}</div>
+					<div class="col col-20" align="center" style="margin-top: 5px; margin-bottom: 5px;">{{fundHistory.unitNetValue | number: 4}}</div>
+					<div class="col col-20" align="center" style="margin-top: 5px; margin-bottom: 5px; margin-right: 15px;;">
+						<span style="background: {{fundHistory.changePercent | showColor}}; color: white; padding: 5px; margin-top: 8px; width: 65px;">
 							{{fundHistory.changePercent >= 0? '+': ''}}{{fundHistory.changePercent | number:2}}%
 						</span>
-							</div>
-						</div>
-					</ion-item>
-				</ion-list>
-			</ion-slide>
-			<ion-slide>
-				<div class="box yellow" align="center">
-					<h1>YELLOW</h1>
+					</div>
 				</div>
-			</ion-slide>
-			<ion-slide>
-				<div class="box pink" align="center">
-					<h1>PINK</h1>
-				</div>
-			</ion-slide>
-		</ion-slide-box>
+			</ion-item>
+		</ion-list>
 
 	</ion-content>
 

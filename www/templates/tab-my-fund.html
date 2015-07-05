@@ -1,16 +1,96 @@
-<ion-view view-title="My Fund">
-  <ion-content>
-    <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
-        <img ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.lastText}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
+<<style type="text/css">
+	.item-avatar,
+	.item-avatar .item-content,
+	.item-avatar-left,
+	.item-avatar-left .item-content {
+		padding-left: 0px;
+		min-height: 50px;
+	}
+	.item-complex.item-icon-right .item-content {
+		padding-right: 0px;
+	}
+	.item-complex .item-content,
+	.item-radio .item-content {
+		padding: 0px;
+	}
+	.row {
+		padding: 0px;
+	}
+</style>
 
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>
-      </ion-item>
-    </ion-list>
-  </ion-content>
+<ion-view view-title="My Fund">
+	<ion-content>
+		<div class="row" style="border-top: 0.5px solid darkgray;">
+			<div class="col col-50" style="border-right: 1px solid darkgray; margin-bottom: -3px; padding: 8px;">
+				<div align="center" style="font-family: 'courier new'; font-size: 12px;">
+					Market Value
+				</div>
+				<div align="center" style="font-size: 16px;">
+					{{holdSummary.totalMarketValue | number: 2}}
+				</div>
+			</div>
+			<div class="col col-50" style="padding: 8px;">
+				<div align="center" style="font-family: 'courier new'; font-size: 12px;">
+					Gain / Loss
+				</div>
+				<div align="center" style="color: {{holdSummary.totalChangeValue | showColor}}; font-size: 16px;">
+					{{holdSummary.totalChangeValue | number: 2}}
+				</div>
+			</div>
+		</div>
+		<div class="row" style="border-top: 1px solid darkgray; margin-top: 3px;">
+			<div class="col col-50" style="padding: 10px; font-size: 15px; font: bold;">
+				Position Details
+			</div>
+			<div class="col col-50" align="right" style="color: {{holdSummary.todayChangeValue | showColor}}; padding-top: 10px;">
+				<div style="margin-right: 15px; font-size: 15px;">
+					{{holdSummary.todayChangeValue | number: 2}}
+				</div>
+			</div>
+		</div>
+
+		<ion-refresher pulling-text="Refreshing data……" on-refresh="doRefreshHoldist()"></ion-refresher>
+
+		<ion-list>
+			<div class="row" style="margin-top: -1px; background: lightgray;">
+				<div class="col col-40" align="left" style="margin-left: 10px; margin-top: 10px; margin-bottom: 8px; ">
+					Name
+				</div>
+				<div class="col col-20" align="right" style="margin-right: 5px;margin-top: 10px; margin-bottom: 8px; ">
+					Last
+				</div>
+				<div class="col col-20" align="right" style="margin-right: 5px;margin-top: 10px; margin-bottom: 8px; ">
+					Market
+				</div>
+				<div class="col col-20" align="right" style="margin-right: 15px;margin-top: 10px; margin-bottom: 8px; ">
+					Chg%
+				</div>
+			</div>
+
+			<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="fund in holdList" type="item-text-wrap" href="#/fund/history/{{fund.code}}">
+
+				<div class="row">
+					<div class="col col-40" align="left">
+						<div style="font-family: 'courier new'; font-size: 12px;">{{fund.name | limitTo: 7}}</div>
+						<div style="font-family: 'courier new'; font-size: 11px;">{{fund.code}}</div>
+					</div>
+					<div class="col col-20" align="right" style="margin-right: 5px;">
+						<div style="font-size: 12px;">{{fund.netValue | number: 4}}</div>
+						<div style="font-size: 10px;">{{fund.calculateDateStr}}</div>
+					</div>
+					<div class="col col-20" align="right" style="margin-right: 5px;">
+						<div style="font-size: 12px; color: {{fund.totalChangeValue | showColor}};">
+							{{fund.totalChangeValue | number: 2}}
+						</div>
+						<div style="font-size: 10px;">{{fund.marketValue | number: 2}}</div>
+					</div>
+					<div class="col col-20" align="right" style="padding-top: 15px; margin-right: 15px;">
+						<span style="color: {{fund.changeValue | showColor}}; padding: 5px; margin-top: 8px; font-size: 12px;">
+							{{fund.changePercent >= 0? '+': ''}}{{fund.changeValue | number:2}}
+						</span>
+					</div>
+				</div>
+			</ion-item>
+		</ion-list>
+	</ion-content>
 </ion-view>

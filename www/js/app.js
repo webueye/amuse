@@ -103,9 +103,30 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 				controller: 'AccountCtrl'
 			}
 		}
+	})
+
+	.state('login', {
+		url: "/login",
+		cache: false,
+		templateUrl: "templates/login.html",
+		controller: 'LoginCtrl'
+	})
+
+	.state('register', {
+		url: "/register",
+		cache: false,
+		templateUrl: "templates/register.html",
+		controller: 'RegisterCtrl'
+	})
+
+	.state('search', {
+		url: "/search",
+		cache: false,
+		templateUrl: "templates/search.html",
+		controller: 'SearchCtrl'
 	});
 
 	// if none of the above states are matched, use this as the fallback
-	$urlRouterProvider.otherwise('/tab/watch');
+	$urlRouterProvider.otherwise('/login');
 
 });

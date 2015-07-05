@@ -1,16 +1,91 @@
-<ion-view view-title="Summary">
-  <ion-content>
-    <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
-        <img ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.lastText}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
+<style type="text/css">
+	.item-avatar,
+	.item-avatar .item-content,
+	.item-avatar-left,
+	.item-avatar-left .item-content {
+		padding-left: 0px;
+	}
+	.item-complex.item-icon-right .item-content {
+		padding-right: 0px;
+	}
+	.item-complex .item-content,
+	.item-radio .item-content {
+		padding: 0px;
+	}
+	.row {
+		padding: 0px;
+	}
+</style>
 
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>
-      </ion-item>
-    </ion-list>
-  </ion-content>
+<ion-view view-title="Summary">
+	<ion-content>
+		<div class="row" style="border-top: 0.5px solid darkgray;">
+			<div class="col col-100" style="padding: 10px;">
+				<div align="center" style="font-family: 'courier new'; font-size: 12px;">
+					Today Gain / Loss
+				</div>
+				<div align="center" style="color: {{summary.todayChangeValue | showColor}}; font-size: 20px;">
+					{{summary.todayChangeValue | number: 2}}
+				</div>
+			</div>
+		</div>
+		<div class="row" style="border-top: 1px solid darkgray; margin-top: 3px;">
+			<div class="col col-50" style="border-right: 1px solid darkgray; margin-bottom: -3px; padding: 10px;">
+				<div align="center" style="font-family: 'courier new'; font-size: 12px;">
+					Total Market Value
+				</div>
+				<div align="center" style="font-size: 17px;">
+					{{summary.totalMarketValue | number: 2}}
+				</div>
+			</div>
+			<div class="col col-50" style="padding: 10px;">
+				<div align="center" style="font-family: 'courier new'; font-size: 12px;">
+					Total Gain / Loss
+				</div>
+				<div align="center" style="color: {{summary.totalChangeValue | showColor}}; font-size: 17px;">
+					{{summary.totalChangeValue | number: 2}}
+				</div>
+			</div>
+		</div>
+
+		<ion-refresher pulling-text="Refreshing data……" on-refresh="doRefreshHoldist()"></ion-refresher>
+
+		<ion-list>
+			<div class="row" style="margin-top: -1px; background: lightgray; height: 35px;">
+				<div class="col col-30" align="left" style="margin-left: 10px; margin-bottom: 8px; ">
+					Date
+				</div>
+				<div class="col col-30" align="right" style="margin-right: 5px; margin-bottom: 8px; ">
+					Market
+				</div>
+				<div class="col col-20" align="right" style="margin-right: 5px; margin-bottom: 8px; ">
+					Chg
+				</div>
+				<div class="col col-20" align="right" style="margin-right: 15px; margin-bottom: 8px; ">
+					Chg%
+				</div>
+			</div>
+
+			<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="fund in summary.summaryItems" type="item-text-wrap" href="#" style="min-height: 40px; height: 40px;">
+				<div class="row">
+					<div class="col col-30" align="left">
+						<div style="font-size: 13px; margin-top:5px;">{{fund.dateStr}}</div>
+					</div>
+					<div class="col col-30" align="right" style="margin-right: 5px;">
+						<div style="font-size: 13px; margin-top:5px;">{{fund.totalMarketValue | number: 2}}</div>
+					</div>
+					<div class="col col-20" align="right" style="margin-right: 5px;">
+						<div style="font-size: 13px; margin-top:5px; color: {{fund.todayChangeValue | showColor}};">
+							{{fund.percent >= 0? '+': ''}}{{fund.todayChangeValue | number: 2}}
+						</div>
+					</div>
+					<div class="col col-20" align="right" style="margin-top:5px;">
+						<span style="color: {{fund.percent | showColor}}; font-size: 13px; margin-right: 8px;">
+							{{fund.percent >= 0? '+': ''}}{{fund.percent}}%
+						</span>
+					</div>
+				</div>
+			</ion-item>
+		</ion-list>
+	</ion-content>
 </ion-view>
